@@ -68,7 +68,7 @@ class App extends React.Component {
     });
     this.cancelId = setInterval(() => {
       this.updateCounter(this.state.counter + 1);
-    }, 100);
+    }, 250);
   }
   pause() {
     this.setState({
