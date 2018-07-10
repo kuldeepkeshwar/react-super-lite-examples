@@ -13,11 +13,11 @@ class Counter extends React.Component {
   render() {
     const props = this.props;
     return (
-      <div id="counter">
+      <div>
         Counter: <span>{props.value}</span>
         {props.showBtns ? (
           <Button onClick={props.minus} style={btnStyles}>
-            🕹
+            🔥🎮🔥
           </Button>
         ) : null}
       </div>

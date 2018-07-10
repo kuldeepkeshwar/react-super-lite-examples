@@ -45,7 +45,6 @@ class App extends React.Component {
     this.stop = this.stop.bind(this);
   }
   updateCounter(counter) {
-    debugger;
     this.setState({
       counter: counter
     });
@@ -91,7 +90,7 @@ class App extends React.Component {
   }
   render() {
     return (
-      <div id="conatiner">
+      <div>
         <div style={styles}>
           {this.state.currentState === STATE.STOPPED ? (
             <Result
@@ -127,7 +126,7 @@ class App extends React.Component {
                 )}
               </div>
               <Counter
-                showBtns={this.cancelId}
+                showBtns={this.state.currentState !== STATE.INIT}
                 minus={this.minus}
                 value={this.state.counter}
               />
