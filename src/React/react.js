@@ -1,12 +1,12 @@
-import { TEXT_NODE, tranformStyleObject } from './utils';
+import { TEXT_NODE, PATCH_TYPE } from './utils';
 import Component from './component';
+
 function addAttribute(el, props) {
   el.$$eventHandlers = el.$$eventHandlers || {};
   Object.keys(el.$$eventHandlers).forEach(eventName =>
     el.removeEventListener(eventName, el.$$eventHandlers[eventName])
   );
   for (const attr of el.attributes) el.removeAttribute(attr.name);
-
   Object.keys(props).forEach(key => {
     if (key.startsWith('on')) {
       const eventName = key.substring(2).toLowerCase();
@@ -16,7 +16,7 @@ function addAttribute(el, props) {
       if (key === 'key') {
         el.key = props[key];
       } else if (key === 'style') {
-        el.setAttribute(key, tranformStyleObject(props[key]));
+        Object.assign(el.style, props[key]);
       } else {
         el.setAttribute(key, props[key]);
       }
@@ -30,7 +30,7 @@ function renderTextNode(props, parent) {
   return el;
 }
 function renderChildren(_children, parent) {
-  return [].concat(..._children).map((c, i) => {
+  return [..._children].map((c, i) => {
     const { type, props = {}, children = [] } = c;
     props.key = props.key || `$$_${i}`;
     return render({ type, props, children }, parent);
@@ -44,9 +44,9 @@ function renderElement(type, props, children, parent) {
   return el;
 }
 function renderComponent(type, _props, _children, parent) {
-  const instance = new type(Object.assign(_props, { children: _children }));
-  let vnode = null;
-  let el = null;
+  const instance = new type({ ..._props, children: _children });
+  let vnode = null,
+    el = null;
   if (instance instanceof Component) {
     instance.componentWillMount();
     vnode = instance.render();
@@ -55,15 +55,15 @@ function renderComponent(type, _props, _children, parent) {
     instance.componentDidMount();
     el.$$instance = instance;
     instance.$$setState = state => {
-      instance.state = state;
-      if (!instance.shouldComponentUpdate()) {
-        return;
-      }
-      instance.componentWillUpdate();
-      const { type, props = {}, children = [] } = instance.render();
-      props.key = props.key || _props.key || '$$root_';
-      patch(el, { type, props, children }, parent);
-      instance.componentDidUpdate();
+      patchSameComponent(
+        el,
+        instance,
+        parent,
+        PATCH_TYPE.STATE,
+        _props,
+        _children,
+        state
+      );
     };
   } else {
     vnode = instance;
@@ -84,68 +84,87 @@ export function render(vnode, parent) {
     }
   }
 }
-function patchTextNode(dom, props) {
-  if (dom.textContent !== props.value) {
-    dom.textContent = props.value;
+function patchTextNode(el, props) {
+  if (el.textContent !== props.value) {
+    el.textContent = props.value;
   }
 }
-function patchComponent(dom, _type, _props, _children, parent) {
-  const instance = dom.$$instance;
-  if (dom.$$instance instanceof _type) {
-    instance.componentWillReceiveProps(_props);
-    instance.props = Object.assign(_props, { children: _children });
-    if (!instance.shouldComponentUpdate()) {
-      return;
-    }
-    instance.componentWillUpdate();
-    const { type, props = {}, children = [] } = instance.render();
-    props.key = props.key || _props.key || '$$root_';
-    patch(dom, { type, props, children }, parent);
-    instance.componentDidUpdate();
+function patchSameComponent(
+  el,
+  instance,
+  parent,
+  patchType,
+  _props,
+  _children,
+  state
+) {
+  if (patchType === PATCH_TYPE.STATE) {
+    instance.state = state;
   } else {
-    dom.$$instance && dom.$$instance.componentWillUnmount();
-    const nextDom = renderComponent(_type, _props, _children);
-    parent.replaceChild(nextDom, dom);
+    instance.componentWillReceiveProps(_props);
+    instance.props = { ..._props, children: _children };
+  }
+  if (!instance.shouldComponentUpdate()) {
+    return;
+  }
+  instance.componentWillUpdate();
+  const { type, props = {}, children = [] } = instance.render();
+  props.key = props.key || _props.key || '$$root_';
+  patch(el, { type, props, children }, parent);
+  instance.componentDidUpdate();
+}
+function patchComponent(el, _type, _props, _children, parent) {
+  const instance = el.$$instance;
+  if (el.$$instance instanceof _type) {
+    patchSameComponent(
+      el,
+      instance,
+      parent,
+      PATCH_TYPE.PROPS,
+      _props,
+      _children
+    );
+  } else {
+    el.$$instance && el.$$instance.componentWillUnmount();
+    const nextel = renderComponent(_type, _props, _children);
+    parent.replaceChild(nextel, el);
   }
 }
-function patchElement(dom, type, props, children, parent) {
-  if (dom.nodeName === type.toUpperCase()) {
-    addAttribute(dom, props);
+function patchElement(el, type, props, children, parent) {
+  if (el.nodeName === type.toUpperCase()) {
+    addAttribute(el, props);
     const cache = {};
-    []
-      .concat(...children)
-      .forEach((c, i) => (c.props.key = c.props.key || `$$_${i}`));
-    dom.childNodes.forEach(c => (cache[c.key] = c));
-    [].concat(...children).forEach(c => {
+    [...children].forEach((c, i) => (c.props.key = c.props.key || `$$_${i}`));
+    el.childNodes.forEach(c => (cache[c.key] = c));
+    [...children].forEach(c => {
       if (cache[c.props.key]) {
-        patch(cache[c.props.key], c, dom);
+        patch(cache[c.props.key], c, el);
       } else {
-        render(c, dom);
+        render(c, el);
       }
       cache[c.props.key] = null;
     });
     Object.keys(cache).forEach(k => {
       if (cache[k]) {
         cache[k].$$instance && cache[k].$$instance.componentWillUnmount();
-        dom.removeChild(cache[k]);
+        el.removeChild(cache[k]);
       }
     });
   } else {
-    dom.$$instance && dom.$$instance.componentWillUnmount();
-    const nextDom = render({ type, props, children });
-    parent.replaceChild(nextDom, dom);
+    el.$$instance && el.$$instance.componentWillUnmount();
+    const nextel = render({ type, props, children });
+    parent.replaceChild(nextel, el);
   }
 }
-function patch(dom, vnode, parent = dom.parentNode) {
+function patch(el, vnode, parent = el.parentNode) {
   const { type, props = {}, children = [] } = vnode;
-  debugger;
-  if (type === TEXT_NODE && dom.nodeName === type) {
-    patchTextNode(dom, props);
+  if (type === TEXT_NODE && el.nodeName === type) {
+    patchTextNode(el, props);
   } else {
     if (type instanceof Function) {
-      patchComponent(dom, type, props, children, parent);
+      patchComponent(el, type, props, children, parent);
     } else {
-      patchElement(dom, type, props, children, parent);
+      patchElement(el, type, props, children, parent);
     }
   }
 }
