@@ -5,6 +5,6 @@
     "plugins": [
       ["transform-react-jsx", {
         "pragma": "React.createElement"
-      },"transform-es2015-spread","transform-object-rest-spread"]
+      }]
     ]
 }

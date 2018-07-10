@@ -1,11 +1,10 @@
 import React, { render } from './React';
-import App from './app';
+import Container from './Container';
 
 const styles = { color: 'skyblue' };
 const linkStyles = { color: 'red', padding: '5px' };
-
-render(
-  <App style={styles}>
+const App = (
+  <div style={styles}>
     <h1>Hello Parcel!</h1>
     <div>
       Look
@@ -20,6 +19,8 @@ render(
       </a>
       for more info about Parcel.
     </div>
-  </App>,
-  document.getElementById('app')
+    <Container />
+  </div>
 );
+
+render(<App />, document.getElementById('app'));

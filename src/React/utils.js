@@ -10,3 +10,4 @@ export function tranformStyleObject(obj) {
     }, '')
     .trim();
 }
+export const TEXT_NODE = '#text';
