@@ -15,7 +15,7 @@ export default ({ reset, won }) => (
   <div style={styles}>
     {won ? <div>You won 🌟💰🏆🌟</div> : <div>You lost ☹</div>}
     <Button style={btnStyle} onClick={reset}>
-      Rest
+      Play Again
     </Button>
   </div>
 );

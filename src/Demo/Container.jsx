@@ -88,6 +88,7 @@ class App extends React.Component {
   componentWillUnmount() {
     this.cleanUp();
   }
+
   render() {
     return (
       <div>
