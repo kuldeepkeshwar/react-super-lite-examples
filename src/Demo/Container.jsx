@@ -1,4 +1,4 @@
-import React, { render } from './../React';
+import React, { render } from 'react';
 import Counter from './Components/Counter';
 import Result from './Components/Result';
 import Button from './Components/Button';

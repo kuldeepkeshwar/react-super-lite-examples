@@ -1,4 +1,4 @@
-import React, { render } from './../React';
+import React, { render } from 'react';
 import Container from './Container';
 
 const styles = {
