@@ -17,6 +17,8 @@ function addAttribute(el, props) {
         el.key = props[key];
       } else if (key === 'style') {
         Object.assign(el.style, props[key]);
+      } else if (key === 'ref') {
+        props[key](el);
       } else {
         el.setAttribute(key, props[key]);
       }

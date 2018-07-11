@@ -6,7 +6,7 @@ const baseStyles = {
   border: '0px',
   backgroundColor: 'skyblue',
   height: '2rem',
-  width: '5rem',
+  minWidth: '5rem',
   cursor: 'pointer'
 };
 export default props => {
