@@ -1,5 +1,6 @@
 import React, { render } from 'react';
-import Container from './Container';
+import Game from "./Containers/Game";
+import AutoSuggest from "./Containers/AutoSuggest";
 
 const styles = {
   display: 'flex',
@@ -15,7 +16,8 @@ const App = (
     <h3 style={{ color: 'black' }}>
       <span>Try to mantain the counter below 10 😎</span>
     </h3>
-    <Container />
+    <Game />
+    <AutoSuggest/>
   </div>
 );
 

@@ -1,7 +1,8 @@
-import React, { render } from 'react';
-import Counter from './Components/Counter';
-import Result from './Components/Result';
-import Button from './Components/Button';
+import React from 'react';
+import Counter from './../Components/Counter';
+import Result from "./../Components/Result";
+import Button from "./../Components/Button";
+
 const winCondition = 10;
 const STATE = {
   INIT: 'INIT',
@@ -30,7 +31,7 @@ const styles = {
   justifyContent: 'center',
   alignItems: 'center'
 };
-class App extends React.Component {
+class Container extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -138,4 +139,4 @@ class App extends React.Component {
     );
   }
 }
-export default App;
+export default Container;
