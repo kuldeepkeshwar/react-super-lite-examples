@@ -1,2 +1,2 @@
 # react-your-own-react
-Create a super light(2K) version for React
+Create a super light(2KB) version for React
