@@ -1,4 +1,4 @@
-import React, { render } from 'react';
+import React, { render } from 'react-super-lite';
 import Game from "./Containers/Game";
 import AutoSuggest from "./Containers/AutoSuggest";
 

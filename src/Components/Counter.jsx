@@ -1,14 +1,13 @@
-import React from 'react';
+import React from 'react-super-lite';
 
 import Button from './Button';
 const btnStyles = {
   // border: '1px #807c7c solid',
   background: 'white'
 };
-
 class Counter extends React.Component {
   componentWillReceiveProps(nextProps) {
-    console.log('got new props', nextProps);
+    console.log("got new props", nextProps);
   }
   render() {
     const props = this.props;

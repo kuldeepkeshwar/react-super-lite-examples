@@ -1,20 +1,23 @@
 {
-  "name": "building-react",
+  "name": "react-super-lite-examples",
   "version": "1.0.0",
-  "description": "create your own react",
+  "description": "react-super-lite examples",
   "main": "index.html",
   "scripts": {
-    "clean":"rm -rf ./dist ./lib",
+    "clean": "rm -rf ./dist ./lib",
     "start": "NODE_ENV=development webpack-dev-server",
     "build": "yarn clean & NODE_ENV=build webpack"
   },
-  "dependencies": {},
+  "dependencies": {
+    "react-super-lite": "git@github.com:kuldeepkeshwar/react-super-lite.git"
+  },
   "devDependencies": {
     "babel": "6.23.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
     "babel-plugin-transform-react-jsx": "^6.24.1",
     "babel-preset-env": "1.7.0",
+    "babel-preset-es2015-node5": "^1.2.0",
     "babel-preset-stage-3": "6.24.1",
     "compression-webpack-plugin": "^1.1.11",
     "html-webpack-plugin": "^3.2.0",

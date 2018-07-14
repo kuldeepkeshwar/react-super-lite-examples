@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react-super-lite';
 
 import Button from './Button';
 const btnStyle = {

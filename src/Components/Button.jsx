@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react-super-lite';
 const baseStyles = {
   outline: 'none',
   fontSize: '1rem',

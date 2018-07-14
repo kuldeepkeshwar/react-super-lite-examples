@@ -1,4 +1,4 @@
-import React from "react";
+import React from "react-super-lite";
 const listStyle={
     display: 'flex',
     flexDirection: 'column',
@@ -35,25 +35,42 @@ class AutoSuggest extends React.Component {
   }
   handleKeyUp(e) {
     const value = e.target.value;
-    this.props.onChange(value)
+    this.props.onChange(value);
   }
   render() {
-      const {options,value}= this.props;
-    return <div style={options.length ? styles : {}}>
+    const { options, value } = this.props;
+    return (
+      <div style={options.length ? styles : {}}>
         <div style={options.length ? labelContainerStyle : styles}>
           <label>Search Users:</label>
-          <input style={inputStyle} type="text" value={value} onChange={this.handleChange} onKeyUp={this.handleKeyUp} />
+          <input
+            style={inputStyle}
+            type="text"
+            value={value}
+            onChange={this.handleChange}
+            onKeyUp={this.handleKeyUp}
+          />
         </div>
         <div style={listWapperStyle}>
-          {options.length ? <div style={listStyle}>
+          {options.length ? (
+            <div style={listStyle}>
               {options.map((o, i) => {
-                return <div id={o.id} key={i} onMouseOver={onMouseOver} onMouseOut={onMouseOut}>
+                return (
+                  <div
+                    id={o.id}
+                    key={i}
+                    onMouseOver={onMouseOver}
+                    onMouseOut={onMouseOut}
+                  >
                     {o.name}
-                  </div>;
+                  </div>
+                );
               })}
-            </div> : null}
+            </div>
+          ) : null}
         </div>
-      </div>;
+      </div>
+    );
   }
 }
 export default AutoSuggest;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react-super-lite';
 import Counter from './../Components/Counter';
 import Result from "./../Components/Result";
 import Button from "./../Components/Button";
@@ -31,6 +31,7 @@ const styles = {
   justifyContent: 'center',
   alignItems: 'center'
 };
+
 class Container extends React.Component {
   constructor(props) {
     super(props);
