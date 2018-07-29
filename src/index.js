@@ -2,23 +2,26 @@ import React, { render } from 'react-super-lite';
 import Game from "./Containers/Game";
 import AutoSuggest from "./Containers/AutoSuggest";
 
-const styles = {
-  display: 'flex',
-  color: 'skyblue',
-  justifyContent: 'center',
-  alignItems: 'center',
-  flexDirection: 'column'
-};
-const App = (
-  <div style={styles}>
+import Table from "./Containers/Table";
+
+import styles from "./styles.scss";
+
+const App = ()=>(
+  <div class={styles["container"]}>
     <h1>Hi there!!</h1>
     <h2>Let's play a game.</h2>
-    <h3 style={{ color: 'black' }}>
+    <h3 key="sample-key" style={{ color: "black" }}>
       <span>Try to mantain the counter below 10 😎</span>
     </h3>
     <Game />
-    <AutoSuggest/>
+    <Table />
+    <AutoSuggest />
   </div>
 );
+// const App = () => (
+//   <div class={styles["container"]}>
+//     <Table />
+//   </div>
+// );
 
 render(<App />, document.getElementById('app'));

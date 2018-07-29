@@ -3,33 +3,20 @@ import Counter from './../Components/Counter';
 import Result from "./../Components/Result";
 import Button from "./../Components/Button";
 
+import styles from "./Game.scss";
+
 const winCondition = 10;
+const INTERVAL=200;
 const STATE = {
   INIT: 'INIT',
   RUNNING: 'RUNNING',
   PAUSE: 'PAUSE',
   STOPPED: 'STOPPED'
 };
-const pauseBtnStyle = {
-  fontSize: '17px',
-  fontWeight: 'bold',
-  fontStretch: 'extra-expanded'
-};
-const actionBarStyles = {
-  display: 'flex',
-  justifyContent: 'space-around'
-};
+
 const actionBtnStyle = {
   border: '1px black solid',
   background: 'white'
-};
-const styles = {
-  display: 'flex',
-  height: '10rem',
-  fontSize: '2rem',
-  color: 'black',
-  justifyContent: 'center',
-  alignItems: 'center'
 };
 
 class Container extends React.Component {
@@ -69,7 +56,7 @@ class Container extends React.Component {
     });
     this.cancelId = setInterval(() => {
       this.updateCounter(this.state.counter + 1);
-    }, 250);
+    }, INTERVAL);
   }
   pause() {
     this.setState({
@@ -92,52 +79,30 @@ class Container extends React.Component {
   }
 
   render() {
-    return (
-      <div>
-        <div style={styles}>
-          {this.state.currentState === STATE.STOPPED ? (
-            <Result
-              won={this.state.counter <= winCondition}
-              reset={this.init}
-            />
-          ) : (
-            <div>
-              <div style={actionBarStyles}>
-                {this.state.currentState === STATE.INIT ||
-                this.state.currentState === STATE.STOPPED ? (
-                  <div>
+    return <div>
+        <div class={styles["container"]}>
+          {this.state.currentState === STATE.STOPPED ? <Result won={this.state.counter <= winCondition} reset={this.init} /> : <div>
+              <div class={styles["action-bar"]}>
+                {this.state.currentState === STATE.INIT || this.state.currentState === STATE.STOPPED ? <div>
                     <Button style={actionBtnStyle} onClick={this.resume}>
                       Start
                     </Button>
-                  </div>
-                ) : (
-                  <div>
-                    {this.state.currentState === STATE.RUNNING ? (
-                      <Button style={actionBtnStyle} onClick={this.pause}>
-                        <span style={pauseBtnStyle}>|</span>
-                        <span style={pauseBtnStyle}>|</span>
-                      </Button>
-                    ) : (
-                      <Button style={actionBtnStyle} onClick={this.resume}>
+                  </div> : <div>
+                    {this.state.currentState === STATE.RUNNING ? <Button style={actionBtnStyle} onClick={this.pause}>
+                        <span class={styles["pause-btn"]}>|</span>
+                        <span class={styles["pause-btn"]}>|</span>
+                      </Button> : <Button style={actionBtnStyle} onClick={this.resume}>
                         ▶
-                      </Button>
-                    )}
+                      </Button>}
                     <Button style={actionBtnStyle} onClick={this.stop}>
                       🛑
                     </Button>
-                  </div>
-                )}
+                  </div>}
               </div>
-              <Counter
-                showBtns={this.state.currentState !== STATE.INIT}
-                minus={this.minus}
-                value={this.state.counter}
-              />
-            </div>
-          )}
+              <Counter showBtns={this.state.currentState !== STATE.INIT} minus={this.minus} value={this.state.counter} />
+            </div>}
         </div>
-      </div>
-    );
+      </div>;
   }
 }
 export default Container;

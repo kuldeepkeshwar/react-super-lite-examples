@@ -1,0 +1,29 @@
+.container {
+  box-shadow: 1px 1px 1px 1px #d6d8d3;
+  width: 400px;
+  padding: 4px 10px;
+  display: flex;
+  flex-direction: column;
+}
+.input {
+  outline: none;
+  border: 0px;
+  height: 20px;
+}
+.label-container {
+  display: flex;
+  flex-direction: column;
+}
+.list {
+  display: flex;
+  flex-direction: column;
+}
+.list-item {
+    margin: 3px;
+  &:hover {
+    background: #d6d8d3;
+  }
+}
+.list-container {
+  border-top: 1px #d6d8d3 solid;
+}

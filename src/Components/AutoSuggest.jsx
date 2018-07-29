@@ -1,32 +1,14 @@
 import React from "react-super-lite";
-const listStyle={
-    display: 'flex',
-    flexDirection: 'column',
-}
-const listWapperStyle = {
-    borderTop: "1px #D6D8D3 solid"
-};
-const styles = {
-  boxShadow: "1px 1px 1px 1px #D6D8D3",
-  width:'400px',
-  display: "flex",
-  flexDirection: "column"
-};
-const inputStyle = {
-  outline: "none",
-  border: "0px",
-  height: "20px"
-};
-const labelContainerStyle = {
-  display: "flex",
-  flexDirection: "column"
-};
-function onMouseOver(){
-    this.style.background = "#D6D8D3";
-}
+import styles from './AutoSuggest.scss';
 
-function onMouseOut() {
-  this.style.background = "white";
+
+function isValidCharKey(e){
+
+    const keycode = e.keyCode;
+
+    const valid = (keycode > 47 && keycode < 58) || keycode == 32 || keycode == 13 || keycode == 8 || (keycode > 64 && keycode < 91) || (keycode > 95 && keycode < 112) || (keycode > 185 && keycode < 193) || (keycode > 218 && keycode < 223);
+
+    return valid;
 }
 class AutoSuggest extends React.Component {
   constructor(props) {
@@ -34,43 +16,28 @@ class AutoSuggest extends React.Component {
     this.handleKeyUp = this.handleKeyUp.bind(this);
   }
   handleKeyUp(e) {
-    const value = e.target.value;
-    this.props.onChange(value);
+    if(isValidCharKey(e)){
+      const value = e.target.value;
+      this.props.onChange(value);
+    }
   }
   render() {
     const { options, value } = this.props;
-    return (
-      <div style={options.length ? styles : {}}>
-        <div style={options.length ? labelContainerStyle : styles}>
+    return <div class={options.length ? styles["container"] : ""}>
+        <div class={options.length ? styles["label-container"] : styles["container"]}>
           <label>Search Users:</label>
-          <input
-            style={inputStyle}
-            type="text"
-            value={value}
-            onChange={this.handleChange}
-            onKeyUp={this.handleKeyUp}
-          />
+          <input class={styles["input"]} type="text" value={value} onChange={this.handleChange} onKeyUp={this.handleKeyUp} />
         </div>
-        <div style={listWapperStyle}>
-          {options.length ? (
-            <div style={listStyle}>
+        <div class={styles["list-container"]}>
+          {options.length ? <div class={styles["list"]}>
               {options.map((o, i) => {
-                return (
-                  <div
-                    id={o.id}
-                    key={i}
-                    onMouseOver={onMouseOver}
-                    onMouseOut={onMouseOut}
-                  >
+                return <div id={o.id} key={i} class={styles["list-item"]}>
                     {o.name}
-                  </div>
-                );
+                  </div>;
               })}
-            </div>
-          ) : null}
+            </div> : null}
         </div>
-      </div>
-    );
+      </div>;
   }
 }
 export default AutoSuggest;

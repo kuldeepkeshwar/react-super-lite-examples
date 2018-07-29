@@ -1,20 +1,9 @@
 import React from 'react-super-lite';
-const baseStyles = {
-  outline: 'none',
-  fontSize: '1rem',
-  margin: '1rem',
-  border: '0px',
-  backgroundColor: 'skyblue',
-  height: '2rem',
-  minWidth: '5rem',
-  cursor: 'pointer'
-};
+import styles from "./Button.scss";
+
 export default props => {
   const { style, children, ...rest } = props;
-  const styles = { ...baseStyles, ...style };
-  return (
-    <button style={styles} {...rest}>
+  return <button class={styles["btn"]} style={style} {...rest}>
       {children}
-    </button>
-  );
+    </button>;
 };

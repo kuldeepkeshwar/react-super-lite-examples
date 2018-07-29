@@ -1,0 +1,21 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin:30px;
+    width: 60%;
+}
+.table-row {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    text-align: center;
+}
+
+.item{
+    min-width: 30px;
+    border: 1px solid red;
+    margin:5px;
+    padding: 20px;
+}

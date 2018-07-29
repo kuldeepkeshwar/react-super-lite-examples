@@ -9,7 +9,7 @@
     "build": "yarn clean & NODE_ENV=build webpack"
   },
   "dependencies": {
-    "react-super-lite": "git@github.com:kuldeepkeshwar/react-super-lite.git"
+    "react-super-lite": "latest"
   },
   "devDependencies": {
     "babel": "6.23.0",
@@ -17,10 +17,14 @@
     "babel-loader": "^7.1.5",
     "babel-plugin-transform-react-jsx": "^6.24.1",
     "babel-preset-env": "1.7.0",
-    "babel-preset-es2015-node5": "^1.2.0",
     "babel-preset-stage-3": "6.24.1",
     "compression-webpack-plugin": "^1.1.11",
+    "css-loader": "^1.0.0",
     "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.4.1",
+    "node-sass": "^4.9.2",
+    "sass-loader": "^7.0.3",
+    "style-loader": "^0.21.0",
     "webpack": "^4.16.0",
     "webpack-cli": "^3.0.8",
     "webpack-dev-server": "^3.1.4"
