@@ -9,7 +9,7 @@
     "build": "yarn clean & NODE_ENV=build webpack"
   },
   "dependencies": {
-    "react-super-lite": "latest"
+    "react-super-lite": "^1.0.4"
   },
   "devDependencies": {
     "babel": "6.23.0",
