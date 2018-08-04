@@ -3943,9 +3943,9 @@ rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-super-lite@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/react-super-lite/-/react-super-lite-1.0.4.tgz#9ee21f63c0275c1162e22a073ca4c647940a18eb"
+react-super-lite@^1.1.6:
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/react-super-lite/-/react-super-lite-1.1.6.tgz#0afa0de514980148892d1bbefdfde46bb5247b88"
 
 read-pkg-up@^1.0.1:
   version "1.0.1"

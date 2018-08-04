@@ -3,7 +3,6 @@ import Button from "./../Components/Button";
 import styles from "./Table.scss";
 
 const INTERVAL = 100;
-const ELEMENT_COUNT=500;
 function arrayGenerator(length) {
   return Array.apply(null, { length: length }).map(Number.call, Number);
 }
@@ -47,7 +46,7 @@ class Table extends React.Component {
 class Container extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { cancelId:null, data: arrayGenerator(ELEMENT_COUNT) };
+    this.state = { cancelId: null, data: arrayGenerator(props.count) };
     this.shuffle = this.shuffle.bind(this);
     this.resume = this.resume.bind(this);
     this.stop = this.stop.bind(this);
@@ -64,7 +63,10 @@ class Container extends React.Component {
   }
   cleanUp() {
     this.state.cancelId && clearInterval(this.state.cancelId);
-    this.setState({ cancelId:null });
+    this.setState({ cancelId: null });
+  }
+  componentWillReceiveProps(nextProps){
+    this.setState({ data: arrayGenerator(nextProps.count) });
   }
   componentWillUnmount() {
     this.cleanUp();
@@ -75,12 +77,14 @@ class Container extends React.Component {
     this.setState({ data });
   }
   render() {
-    return <div class={styles["container"]}>
+    return (
+      <div class={styles["container"]}>
         <Button onClick={this.state.cancelId ? this.stop : this.resume}>
           {this.state.cancelId ? "Stop" : "Start"}
         </Button>
         <Table items={this.state.data} />
-      </div>;
+      </div>
+    );
   }
 }
 
