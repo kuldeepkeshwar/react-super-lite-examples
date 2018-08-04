@@ -1,13 +1,12 @@
 .headers {
   display: flex;
   line-height: 2rem;
+//   border-bottom:2px solid grey; 
 }
 .tab {
   text-align: center;
   cursor: pointer;
-  margin: 1px;
   color: rgba(238, 110, 115, 0.7);
-  border-bottom: 2px solid;
   
   & a {
     width: 100%;
@@ -21,6 +20,16 @@
 }
 .active {
     background-color: rgba(246, 178, 181, 0.2);
-    border-bottom-color: rgba(238, 110, 115, 0.7);
     color: #ee6e73;  
+    position: relative;
+
+    &::after{
+      content: '';
+      position: absolute;
+      bottom:-2px;
+      left: 0px;
+      right: 0px;
+      background:  rgba(238, 110, 115, 1);
+      height: 2px;  
+    }
   }
