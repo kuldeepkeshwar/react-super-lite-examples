@@ -6,10 +6,10 @@
   "scripts": {
     "clean": "rm -rf ./dist ./lib",
     "start": "NODE_ENV=development webpack-dev-server",
-    "build": "yarn clean & NODE_ENV=build webpack"
+    "build": "yarn clean & NODE_ENV=production webpack"
   },
   "dependencies": {
-    "react-super-lite": "^1.0.4"
+    "react-super-lite": "^1.1.6"
   },
   "devDependencies": {
     "babel": "6.23.0",
